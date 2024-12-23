@@ -1,0 +1,26 @@
+extends layout/base
+
+block block
+  .m-auto
+    .input-shadow.rounded.bg-white.w-50.m-auto.mt-4.mb-4.width-100
+      .text-center
+        img.w-50.m-auto.text-center(src='/Assets/Images/login1.jpg' alt='mouse corsair')
+      .p-5.justify-content-center.text-center
+        h5.text-dark.fw-bold Login 
+          span.fs-6.text-secondary or 
+          span.fs-5.fw-bold.text-dark Singup 
+        .mb-3.mt-3
+          p.product-des By continuing, I agree to the  
+            span.color-main.fw-bold Terms of Use 
+            span  and 
+            span.color-main.fw-bold Privacy Policy
+          form#send_otp
+            input#phone_num.form-control.w-50.m-auto.mb-3.bg-light(type='text' placeholder='Mobile Number')           
+            button.buy-now(type="submit") CONTINUE
+            p.product-des.mt-3 Have trouble logging in?  
+              span.color-main.fw-bold Get help
+            #otp_section.d-none
+              input#verification_otp.form-control.w-50.mb-3.m-auto.mt-3.bg-light(type='text' placeholder='Enter OTP')
+              button#verify_otp.buy-now(type="button") LOGIN
+
+

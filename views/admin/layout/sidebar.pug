@@ -1,0 +1,45 @@
+.col-3.background_color.m-0.ps-2
+    .d-flex.flex-column.height-100.background_white.p-3.rounded
+        div
+            .d-flex.p-2.pointer.mt-2
+                h3.fw-bold.main_color.m-0.p-0 Themobsterstash
+                p.gray-color.fw-bold.m-0.align-self-end.p-0 .com
+            hr.gray-color.m-0
+            .mt-3
+                p(class=`${fors ==="dashboard" ? "menu_button text-white fs-6 pointer" : "p-15 fs-6 menu_hover"}`)
+                    a(href='/admin/home' class=`${fors ==="dashboard" ? "text-white" : "gray-color"}`)
+                        i.bi.bi-house-door-fill.me-2(class=`${fors ==="dashboard" ? "text-white" : "second-color"}`)
+                        | Dashboard
+                p(class=`${fors ==="users" ? "menu_button text-white fs-6 pointer" : "gray-color p-15 fs-6 menu_hover"}`)
+                    a.gray-color(href='/admin/user-management' class=`${fors ==="users" ? "text-white" : "gray-color"}`)
+                        i.bi.bi-person-fill.me-2(class=`${fors ==="users" ? "text-white" : "second-color"}`)
+                        | Manage
+                        |                   Users
+                p(class=`${fors ==="vendors" ? "menu_button text-white fs-6 pointer" : "gray-color p-15 fs-6 menu_hover"}`)
+                    a.gray-color(href='/admin/vendors-management' class=`${fors ==="vendors" ? "text-white" : "gray-color"}`)
+                        i.bi.bi-people-fill.me-2(class=`${fors ==="vendors" ? "text-white" : "second-color"}`)
+                        | Manage
+                        |                   Vendor
+                p(class=`${fors ==="verifications" ? "menu_button text-white fs-6 pointer" : "gray-color p-15 fs-6 menu_hover"}`)
+                    a.gray-color(href='/admin/vendors-management/verification-requests' class=`${fors ==="verifications" ? "text-white" : "gray-color"}`)
+                        i.bi.bi-person-workspace.me-2(class=`${fors ==="verifications" ? "text-white" : "second-color"}`)
+                        | Vendor Verification
+                p(class=`${fors ==="category" ? "menu_button text-white fs-6 pointer" : "gray-color p-15 fs-6 menu_hover"}`)
+                    a.gray-color(href='/admin/category-management' class=`${fors ==="category" ? "text-white" : "gray-color"}`)
+                        i.bi.bi-basket.me-2(class=`${fors ==="category" ? "text-white" : "second-color"}`)
+                        | Category Management
+                p(class=`${fors ==="payments" ? "menu_button text-white fs-6 pointer" : "gray-color p-15 fs-6 menu_hover"}`)
+                    a.gray-color(href='#' class=`${fors ==="payments" ? "text-white" : "gray-color"}`)
+                        i.bi.bi-paypal.me-2(class=`${fors ==="payments" ? "text-white" : "second-color"}`)
+                        | Manage
+                        |                   Payment
+                p(class=`${fors ==="reports" ? "menu_button text-white fs-6 pointer" : "gray-color p-15 fs-6 menu_hover"}`)
+                    a.gray-color(href='/admin/reports-management' class=`${fors ==="reports" ? "text-white" : "gray-color"}`)
+                        i.bi.bi-exclamation-triangle-fill.me-2(class=`${fors ==="reports" ? "text-white" : "second-color"}`)
+                        | App Reports
+        .mt-auto
+            hr.gray-color.m-0
+            p.gray-color.p-15.fs-6.menu_hover.mt-2
+                a.gray-color(href='/admin/logout')
+                    i.bi.bi-power.fw-bold.me-2.second-color
+                    | Logout

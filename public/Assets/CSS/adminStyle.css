@@ -1,0 +1,198 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+
+:root {
+  --MAIN_COLOR: #1c2127;
+  --BACK_COLOR: #ececec;
+  --SECOND_COLOR: #1c2127;
+  --GRAY_COLOR: #747171;
+  --WHITE_COLOR: #ffffff;
+  --BUTTON_COLOR: #a0a0a0;
+  --BLACK_COLOR: #000000;
+  --LEIGH_GRAY: #d9d9d9;
+}
+}
+
+.background_color {
+    background-color: var(--BACK_COLOR);
+}
+
+.main_background {
+    background-color: var(--MAIN_COLOR);
+}
+
+.main_color {
+    color: var(--MAIN_COLOR);
+}
+
+.gray-color {
+    color: var(--GRAY_COLOR);
+}
+
+.second-color {
+    color: var(--SECOND_COLOR);
+}
+
+.black_color {
+    color: var(--BLACK_COLOR);
+}
+
+.background_white {
+    background-color: var(--WHITE_COLOR);
+}
+
+.button_background {
+    background-color: var(--BUTTON_COLOR);
+}
+
+a {
+    text-decoration: none;
+}
+
+li {
+    list-style: none;
+}
+
+.fs-small {
+    font-size: 12px;
+}
+
+.text-14 {
+    font-size: 14px;
+}
+.height-100 {
+    height: 100vh;
+}
+
+.width-100 {
+    width: 100vw;
+}
+
+.p-15 {
+    padding: 10px 15px;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.button_light {
+    background-color: var(--BUTTON_COLOR);
+    padding: 10px 30px;
+    border-radius: 50;
+    border: var(--MAIN_COLOR) 1px solid;
+    color: var(--SECOND_COLOR);
+    border-radius: 100px;
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+    -ms-border-radius: 100px;
+    -o-border-radius: 100px;
+    cursor: pointer;
+    width: 200px;
+    text-align: center;
+}
+
+.in-active {
+    color: var(--SECOND_COLOR);
+    text-align: center;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+.button_dark {
+    background-color: var(--MAIN_COLOR);
+    padding: 10px 30px;
+    border-radius: 50;
+    border: var(--MAIN_COLOR) 1px solid;
+    color: var(--WHITE_COLOR);
+    border-radius: 100px;
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+    -ms-border-radius: 100px;
+    -o-border-radius: 100px;
+    cursor: pointer;
+    width: 200px;
+    text-align: center;
+}
+
+.menu_button {
+    background-color: var(--MAIN_COLOR);
+    padding: 10px 15px;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
+
+.menu_hover:hover {
+    background-color: var(--BUTTON_COLOR);
+    padding: 10px 15px;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    cursor: pointer;
+}
+
+.icon {
+    width: 40px;
+    height: 40px;
+}
+
+.has-search .form-control {
+    padding-left: 2.375rem;
+    border-radius: 100px;
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+    -ms-border-radius: 100px;
+    -o-border-radius: 100px;
+    background-color: var(--WHITE_COLOR);
+    width: 50vw;
+}
+
+.form-control:focus {
+    box-shadow: none;
+}
+
+.has-search .form-control-feedback {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    pointer-events: none;
+    color: var(--GRAY_COLOR);
+}
+
+.over-flow {
+    overflow-y: scroll;
+}
+
+.id_image {
+    width: 300px;
+    height: 180px;
+    border: var(--GRAY_COLOR) 1px solid;
+}
+
+.profile_image {
+    width: 150px;
+    height: 150px;
+    border-radius: 300px;
+    -webkit-border-radius: 300px;
+    -moz-border-radius: 300px;
+    -ms-border-radius: 300px;
+    -o-border-radius: 300px;
+}
+
+.profile-card {
+    width: 150px;
+    height: 150px;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}

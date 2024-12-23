@@ -1,0 +1,86 @@
+extends layout/base
+
+block block 
+    .col-9.background_color.m-0.height-100.over-flow
+        .p-2.background_white.shadow.mt-2.rounded
+            .d-flex.justify-content-between.align-items-center
+                .form-group.has-search.position-relative
+                    span.bi.bi-search.form-control-feedback
+                    input.form-control(type='text' placeholder='Search')
+                img.icon(src='./Assets/Images/icon.png' alt='user-profile')
+        .p-3.background_white.shadow.mt-2.rounded
+            p.fs-5.p-0.m-0.fw-bold.second-color Product Details
+            .row
+                .col-5
+                    p.fs-6.p-0.m-0.fw-bold.second-color.mt-3
+                        | Banner Image
+                .col-7
+                    .row
+                        .col-4
+                            img.rounded.border(width='100%' height='150px' src=product.bannerImage alt='id')
+            .row
+                .col-5
+                    p.fs-6.p-0.m-0.fw-bold.second-color.mt-3
+                        | Product Images
+                .col-7
+                    .row
+                        each doc in product.imageGallery
+                            .col-4
+                                img.rounded.border(width='100%' height='150px' src=doc alt='id')
+
+            .row.mt-2
+                .col-5
+                    p.fs-6.p-0.m-0.fw-bold.second-color.mt-3
+                        | Product Details
+                .col-7.mt-2
+                    .d-flex
+                        p.p-0.m-0.fw-bold Product Name :
+                        p.p-0.m-0.gray-color= product.name
+                    .d-flex.mt-2
+                        p.p-0.m-0.fw-bold Description:
+                        p.p-0.m-0.gray-color=product.description
+                    .d-flex.mt-2
+                        p.p-0.m-0.fw-bold Regulars Price :
+                        p.p-0.m-0.gray-color $#{product.price}
+                    .d-flex.mt-2
+                        p.p-0.m-0.fw-bold Discounted Price :
+                        p.p-0.m-0.gray-color $#{product.discountPrice}
+                    .d-flex.mt-2
+                        p.p-0.m-0.fw-bold Deal of the day:
+                        p.p-0.m-0.gray-color=product.dealOfTheDay
+                    if product.productType === "colorOnly" || product.productType === "colorWithSize"
+                        -const colors = product.productDetails.map(el=>el.color).join(',')
+                        .d-flex.mt-2
+                            p.p-0.m-0.fw-bold Available Colors:
+                            p.p-0.m-0.gray-color=colors
+                    if product.productType === "colorOnly" || product.productType === "colorWithSize"
+                        -const sizes = product.productDetails.map(el=>{return el.subDetails.map(els=>els.size)})
+                        .d-flex.mt-2
+                            p.p-0.m-0.fw-bold Available Size :
+                            p.p-0.m-0.gray-color=sizes
+                    p.fs-6.p-0.m-0.fw-bold.second-color.mt-3 Features
+                        each doc in product.features
+                            .d-flex.mt-2
+                                p.p-0.m-0.fw-bold #{doc.title} :
+                                p.p-0.m-0.gray-color=doc.description
+                    p.fs-6.p-0.m-0.fw-bold.second-color.mt-3 Specification
+                        each doc in product.specification
+                            .d-flex.mt-2
+                                p.p-0.m-0.fw-bold #{doc.title} :
+                                p.p-0.m-0.gray-color=doc.description
+
+            .row
+                .col-5
+                    p.fs-6.p-0.m-0.fw-bold.second-color.mt-3
+                        | Product Reviews
+                .col-7
+                    each doc in product.reviews
+                        .border.rounded.mt-3.p-2
+                            .d-flex
+                                img.icon(src=doc.userId.profile alt='user-profile')
+                                div
+                                    p.fs-6.p-0.m-0.fw-bold.second-color=doc.userId.name
+                                    .d-flex
+                                        each val in [1,2,3,4,5]
+                                            i.bi.main-light(class=`${val > doc.rating ?"bi-star" :  "bi-star-fill" }`) 
+                            p.p-0.m-0.gray-color=doc.review

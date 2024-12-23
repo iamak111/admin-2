@@ -1,0 +1,115 @@
+extends layout/base
+
+block block
+    .col-9.background_color.m-0.height-100.over-flow
+        .p-2.background_white.shadow.mt-2.rounded
+            .d-flex.justify-content-between.align-items-center
+                .form-group.has-search.position-relative
+                    span.bi.bi-search.form-control-feedback
+                    input.form-control(type='text' placeholder='Search')
+                img.icon(src=user.profile alt='user-profile')
+        if !verify
+            div
+                .p-3.background_white.shadow.mt-2.rounded
+                    .d-flex.justify-content-around
+                        a.button_dark(href=`/admin/vendors-management/${user.ecmuId}`) Personal Details
+                        a.button_light(href=`/admin/vendors-management/order-details/${user.ecmuId}`) Order Details
+                        a.button_light(href=`/admin/vendors-management/products/${user.ecmuId}`) Product Details
+        .p-2.background_white.shadow.mt-2.rounded
+            div
+                .m-auto
+                    h6.fs-6.fw-bold.second-color.p-0.m-0.text-center
+                        | Vendor Details
+                    .text-center
+                        img.profile_image.mt-4.text-center(src=user.profile alt=user.name)
+                    .row
+                        .col-5.ps-5.pt-4
+                            p.second-color.fw-bold Name
+                        .col-1.pt-4
+                            p.second-color.fw-bold :
+                        .col-6.mt-4
+                            p.gray-color= user.name
+                    .row
+                        .col-5.ps-5.pt-2
+                            p.second-color.fw-bold Phone
+                        .col-1.pt-1
+                            p.second-color.fw-bold :
+                        .col-6.mt-1
+                            p.gray-color= user.phone
+                    .row
+                        .col-5.ps-5.pt-2
+                            p.second-color.fw-bold Shop Phone
+                        .col-1.pt-1
+                            p.second-color.fw-bold :
+                        .col-6.mt-1
+                            p.gray-color= user.shopPhone
+                    .row
+                        .col-5.ps-5.pt-2
+                            p.second-color.fw-bold E-Mail
+                        .col-1.pt-1
+                            p.second-color.fw-bold :
+                        .col-6.mt-1
+                            p.gray-color= user.email
+                    .row
+                        .col-5.ps-5.pt-2
+                            p.second-color.fw-bold Shop Address
+                        .col-1.pt-1
+                            p.second-color.fw-bold :
+                        .col-6.mt-1
+                            p.gray-color=user.shopAddress
+                    .row
+                        .col-5.ps-5.pt-2
+                            p.second-color.fw-bold State
+                        .col-1.pt-1
+                            p.second-color.fw-bold :
+                        .col-6.mt-1
+                            p.gray-color=user.state
+                    .row
+                        .col-5.ps-5.pt-2
+                            p.second-color.fw-bold City
+                        .col-1.pt-1
+                            p.second-color.fw-bold :
+                        .col-6.mt-1
+                            p.gray-color= user.city
+                    .row
+                        .col-5.ps-5.pt-2
+                            p.second-color.fw-bold Zip-Code
+                        .col-1.pt-1
+                            p.second-color.fw-bold :
+                        .col-6.mt-1
+                            p.gray-color=user.zipcode
+                    .row
+                        .col-5.ps-5.pt-2
+                            p.second-color.fw-bold GST Number
+                        .col-1.pt-1
+                            p.second-color.fw-bold :
+                        .col-6.mt-1
+                            p.gray-color=user.GSTNumber
+                    .row
+                        .col-5.ps-5.pt-2
+                            p.second-color.fw-bold License
+                        .col-1.pt-1
+                            p.second-color.fw-bold :
+                        .col-6.mt-1
+                            -console.log(user)
+                            each docs in user.verifyDocuments
+                                a(href=docs) Download
+                                br
+                    //- .row
+                        .col-5.ps-5.pt-2
+                            p.second-color.fw-bold Id Card
+                        .col-1.pt-1
+                            p.second-color.fw-bold :
+                        .col-6.mt-1
+                            img.id_image.rounded(src='https://cdn.pixabay.com/photo/2022/11/09/00/44/aadhaar-card-7579588_1280.png' alt='id')
+                    div
+                        .col-12.ps-5.pt-2
+                            p.second-color.fw-bold Shop Images
+                            .d-flex.justify-content-around
+                                each docs in user.shopImage
+                                    img.rounded.border(width='100px' height='100px' src=docs alt='id')
+        if verify
+            .p-3.background_white.shadow.mt-2.rounded
+                .d-flex.justify-content-around#vendor_verification(data-id=user.ecmuId)
+                    a.button_dark(data-status="accepted") Accepted
+                    a.button_light(data-status="accepted") Rejected

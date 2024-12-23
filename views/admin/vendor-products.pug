@@ -1,0 +1,41 @@
+extends layout/base
+
+block block  
+    .col-9.background_color.m-0.height-100.over-flow
+        .p-2.background_white.shadow.mt-2.rounded
+            .d-flex.justify-content-between.align-items-center
+                .form-group.has-search.position-relative
+                    span.bi.bi-search.form-control-feedback
+                    input.form-control(type='text' placeholder='Search')
+                img.icon(src='./Assets/Images/icon.png' alt='user-profile')
+        div
+            .p-3.background_white.shadow.mt-2.rounded
+                .d-flex.justify-content-around
+                    a.button_light(href=`/admin/vendors-management/${user.ecmuId}`) Personal Details
+                    a.button_light(href=`/admin/vendors-management/order-details/${user.ecmuId}`) Order Details
+                    a.button_dark(href=`/admin/vendors-management/products/${user.ecmuId}`) Product Details
+        .p-2.background_white.shadow.mt-2.rounded
+            p.fs-5.p-0.m-0.fw-bold.second-color Product List
+            div
+                each doc in products
+                    a.d-flex.justify-content-between.align-items-center.mt-3(href=`/admin/vendors-management/products/details/${user.ecmuId}/${doc.ecmpeId}`)
+                        .d-flex.align-items-center
+                            img.icon(src=doc.bannerImage alt=doc.name)
+                            .ms-2
+                                p.fs-6.p-0.m-0.fw-bold.second-color=doc.name
+                        p.p-0.m-0.gray-color= new Date(doc.createdAt).toLocaleDateString()
+                        p.p-0.m-0 View Details
+
+        nav.mt-5(aria-label='Page navigation example')
+            ul.pagination.justify-content-center
+                li.page-item
+                    a.page-link.pagination_manage(type="button" aria-label='Previous' data-type="pre")
+                        span(aria-hidden='true') &laquo;
+                li.page-item
+                    - const datas = new URL(url);
+                    - let num = datas.searchParams.get('page');
+                    - num = !!num*1?num : 1;
+                    a.page-link.active#page_no()=num 
+                li.page-item
+                    button.page-link.pagination_manage(type="button" aria-label='Next' disabled=products.length ? false : true class=products.length ? "" :"bg-light" data-type="next")
+                        span(aria-hidden='true' ) &raquo;

@@ -1,0 +1,158 @@
+extends layout/base
+
+block block
+    .col-9.background_color.m-0.height-100.over-flow
+        .p-2.background_white.shadow.mt-2.rounded
+            .d-flex.justify-content-between.align-items-center
+                .form-group.has-search.position-relative
+                    span.bi.bi-search.form-control-feedback
+                    input.form-control(type='text' placeholder='Search')
+                img.icon(src='./Assets/Images/icon.png' alt='user-profile')
+        .p-3.background_white.shadow.mt-2.rounded
+            h6.fs-5.fw-bold.second-color Statistics
+            .row.mt-3
+                .col-sm-3
+                    a.d-flex.border.rounded.p-3(href='#')
+                        i.bi.bi-fire.fs-2.ps-3.pe-3.main_color
+                        .ms-2.mt-2
+                            h6.fs-5.p-0.m-0.fw-bold.second-color.text-center
+                                | #{userCount}
+                            p.p-0.m-0.gray-color.text-center Total Users
+                .col-sm-3
+                    a.d-flex.border.rounded.p-3(href='#')
+                        i.bi.bi-fire.fs-2.ps-3.pe-3.main_color
+                        .ms-2.mt-2
+                            h6.fs-5.p-0.m-0.fw-bold.second-color.text-center
+                                | #{vendorCount}
+                            p.p-0.m-0.gray-color.text-center Vendors
+                .col-sm-3
+                    a.d-flex.border.rounded.p-3(href='#')
+                        i.bi.bi-fire.fs-2.ps-3.pe-3.main_color
+                        .ms-2.mt-2
+                            h6.fs-5.p-0.m-0.fw-bold.second-color.text-center
+                                | #{verificationBendingCount}
+                            p.p-0.m-0.gray-color.text-center Verification
+                .col-sm-3
+                    a.d-flex.border.rounded.p-3(href='#')
+                        i.bi.bi-fire.fs-2.ps-3.pe-3.main_color
+                        .ms-2.mt-2
+                            h6.fs-5.p-0.m-0.fw-bold.second-color.text-center
+                                | #{orderCount}
+                            p.p-0.m-0.gray-color.text-center Orders
+        .p-3.background_white.shadow.mt-2.rounded
+            .d-flex.justify-content-between
+                h6.fs-5.fw-bold.second-color User Statistics
+            #user_bar(style='width: 900px; height: 500px')
+        .row
+            .col-sm-6
+                .p-3.background_white.shadow.mt-2.rounded
+                    .d-flex.justify-content-between
+                        h6.fs-5.fw-bold.second-color.p-0.m-0 New Users
+                        a(href='/admin/user-management') View all
+                    hr.gray-color.m-0.mt-1
+                    each doc in userList
+                        .d-flex.justify-content-between.align-items-center.mt-3
+                            .d-flex.align-items-center
+                                img.icon(src=doc.profile alt=`${doc.name}-profile`)
+                                .ms-2
+                                    p.fs-6.p-0.m-0.fw-bold.second-color=doc.name
+                            p.p-0.m-0.gray-color= new Date(doc.createdAt).toLocaleDateString()
+
+            .col-sm-6
+                .p-3.background_white.shadow.mt-2.rounded
+                    .d-flex.justify-content-between
+                        h6.fs-5.fw-bold.second-color.p-0.m-0 New Vendors
+                        a(href='#') View all
+                    hr.gray-color.m-0.mt-1
+                    each doc in vendorList
+                        .d-flex.justify-content-between.align-items-center.mt-3
+                            .d-flex.align-items-center
+                                img.icon(src=doc.profile alt=`${doc.name}-profile`)
+                                .ms-2
+                                    p.fs-6.p-0.m-0.fw-bold.second-color=doc.name
+                            p.p-0.m-0.gray-color= new Date(doc.createdAt).toLocaleDateString()
+
+        .p-3.background_white.shadow.mt-2.rounded
+            .d-flex.justify-content-between
+                h6.fs-5.fw-bold.second-color Order Statistics
+            #vendor_bar(style='width: 900px; height: 500px')
+        .p-2.background_white.shadow.mt-2.rounded
+            .d-flex.justify-content-between
+                h6.fs-5.fw-bold.second-color App Reports
+            #batch-list
+                table.table.table-bordered.text-center.mt-3
+                    thead
+                        tr
+                            th(scope='col') S.No
+                            th(scope='col') User Name
+                            th(scope='col') Report Title
+                            th(scope='col') Description
+                            th(scope='col') Date
+                    tbody
+                        each doc in reports
+                            tr
+                                th(scope='row') 1
+                                td=doc.userId.name
+                                td= doc.title
+                                td= doc.description
+                                td= new Date(doc.createdAt).toLocaleDateString()
+
+
+    script(src='/Assets/JS/Script.js')
+    script(type='text/javascript' src='https://www.gstatic.com/charts/loader.js')
+    script(type='text/javascript').
+        const obj = {"1":"Jun","2":"Feb","3":"Mar","4":"Apr","5":"May","6":"June","7":"July","8":"Aug","9":"Sep","10":"Oct","11":"Nov","12":"Dec",};
+        const vals = (!{ JSON.stringify(userStates) });
+         
+        const arr = new Array(12).fill(1).map((el,i)=> {
+            const str = i+1
+            if(vals.hasOwnProperty(str))
+                return [obj[str], vals[str]]
+            return [obj[str], 0]
+        });
+        google.charts.load("current", { packages: ["bar"] });
+        google.charts.setOnLoadCallback(drawStuff);
+        function drawStuff() {
+        var data = new google.visualization.DataTable();
+        data.addColumn("string", "Month");
+        data.addColumn("number", "Count");
+        data.addRows(arr);
+        var options = {
+        width: 900,
+        legend: { position: "none" },
+        bars: "vertical",
+        bar: { groupWidth: "90%" },
+        };
+        var chart = new google.charts.Bar(document.getElementById("user_bar"));
+        chart.draw(data, options);
+        }
+    script(type='text/javascript').
+        const objs = {"1":"Jun","2":"Feb","3":"Mar","4":"Apr","5":"May","6":"June","7":"July","8":"Aug", "9":"Sep","10":"Oct","11":"Nov","12":"Dec",};
+        const vals2 = (!{ JSON.stringify(orderState) });
+         
+        const arr2 = new Array(12).fill(1).map((el,i)=> {
+            const str = i+1
+            if(vals2.hasOwnProperty(str))
+                return [objs[str], vals2[str]]
+            return [objs[str], 0]
+        });
+        console.log(arr2);
+
+        google.charts.load("current", { packages: ["bar"] });
+        google.charts.setOnLoadCallback(drawStuff);
+        function drawStuff() {
+        var data = new google.visualization.DataTable();
+        data.addColumn("string", "Month");
+        data.addColumn("number", "Count");
+        data.addRows(arr2);
+        var options = {
+        width: 900,
+        legend: { position: "none" },
+        bars: "vertical",
+        bar: { groupWidth: "90%" },
+        };
+        var chart = new google.charts.Bar(
+        document.getElementById("vendor_bar")
+        );
+        chart.draw(data, options);
+        }

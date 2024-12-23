@@ -1,0 +1,17 @@
+extends layout/base
+
+block block     
+    // 404 Error Image Section
+    .m-auto
+        .w-50.m-auto.mt-4.mb-4.width-100
+            .text-center
+                img.w-50.m-auto.text-center(src='/Assets/Images/404.jpg' alt='mouse corsair')
+            .p-5.justify-content-center.text-center
+                p.lead= msg
+                .mb-3.mt-3
+                    if msg === "You are not loggedin. Please login and try to access the page."
+                        a.buy-now(href='/admin/login') Login
+                    else if msg.startsWith("undefiefd url")
+                        a.buy-now(href='/admin/login') Login
+                    else
+                        a.buy-now(href='/admin/logout') Logout

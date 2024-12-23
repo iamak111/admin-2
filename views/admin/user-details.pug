@@ -1,0 +1,133 @@
+extends layout/base
+
+block block
+    .col-9.background_color.m-0.height-100.over-flow
+        .p-2.background_white.shadow.mt-2.rounded
+            .d-flex.justify-content-between.align-items-center
+                .form-group.has-search.position-relative
+                    span.bi.bi-search.form-control-feedback
+                    input.form-control(type='text' placeholder='Search')
+                img.icon(src=user.profile alt='user-profile')
+        div
+            .p-3.background_white.shadow.mt-2.rounded
+                .d-flex.justify-content-between
+                    div
+                        h2.fw-bold=user.name
+                        p= user.phone
+                    img(src=user.profile height='100px' width='100px' alt='user-profile')
+        div
+            .p-3.background_white.shadow.mt-2.rounded
+                .d-flex.justify-content-around
+                    a#order.in-active.button_dark(onclick='functionOrder()') Order Details
+                    a#address.in-active(onclick='functionAddress()') Address Details
+        #order-list
+            .p-2.background_white.shadow.mt-2.rounded
+                .p-1.button_background.w-50.rounded-pill.m-auto.mt-3
+                    .d-flex
+                        a#batch.in-active.w-50.button_dark(onclick='functionBatch()') Active Order
+                        a#selected.w-50.in-active(onclick='functionSelect()') Order History
+                #batch-list
+                    .row.p-3
+                        each doc in orders.active
+                            -const val = doc.productDetails;
+                            .col-6
+                                .row.border.rounded.p-2
+                                    .col-5
+                                        img.rounded.border(width='100%' src=val.bannerImage alt='id')
+                                    .col-7
+                                        p.fs-6.p-0.m-0.fw-bold.second-color=val.name
+                                        p.p-0.m-0.gray-color.fs-small 
+                                            | #{val.productType === "colorOnly" || val.productType === "colorWithSize" ? val.color+",":""} #{val.productType === "sizeOnly" || val.productType === "colorWithSize" ? val.size+",":""} #{new Date(doc.createdAt).toLocaleDateString()}
+                                        p.fs-5.p-0.m-0.fw-bold.second-color 
+                                            if val.discountPrice
+                                                | $#{val.discountPrice}
+                                                span.text-secondary.fw-normal.text-decoration-line-through.product-des $#{val.price}
+                                            else 
+                                                | $#{val.price}
+
+                                        p.p-0.m-0.gray-color.fs-small
+                                            | Delivery Date : -
+                                        p.p-0.m-0.gray-color.fs-small
+                                            | Status : #{doc.orderDetails.orderStatus}
+
+                #selected-list.d-none
+                    .row.p-3
+                        each doc in orders.history
+                            -const val = doc.productDetails;
+                            .col-6
+                                .row.border.rounded.p-2
+                                    .col-5
+                                        img.rounded.border(width='100%' src=val.bannerImage alt='id')
+                                    .col-7
+                                        p.fs-6.p-0.m-0.fw-bold.second-color=val.name
+                                        p.p-0.m-0.gray-color.fs-small 
+                                            | #{val.productType === "colorOnly" || val.productType === "colorWithSize" ? val.color+",":""} #{val.productType === "sizeOnly" || val.productType === "colorWithSize" ? val.size+",":""} #{new Date(doc.createdAt).toLocaleDateString()}
+                                        p.fs-5.p-0.m-0.fw-bold.second-color 
+                                            if val.discountPrice
+                                                | $#{val.discountPrice}
+                                                span.text-secondary.fw-normal.text-decoration-line-through.product-des $#{val.price}
+                                            else 
+                                                | $#{val.price}
+
+                                        p.p-0.m-0.gray-color.fs-small
+                                            | Delivery Date : -
+                                        p.p-0.m-0.gray-color.fs-small
+                                            | Status : #{doc.orderDetails.orderStatus}
+
+        #address-list.d-none
+            .p-2.background_white.shadow.mt-2.rounded
+                .row.p-3
+                    each doc in address
+                        .col-6.mt-2
+                            .border.rounded.p-2.shadow
+                                p.fs-6.p-0.m-0.fw-bold.second-color= doc.name
+                                p.gray-color #{doc.streetAddress}, #{doc.town}, #{doc.state}, #{doc.country} - #{doc.zip} 
+                                .d-flex.mt-1
+                                    p.fw-bold Phone:
+                                    p.gray-color #{doc.phone}
+                                .d-flex.mt-1
+                                    p.fw-bold Land mark :
+                                    p.gray-color= doc.landmark
+
+block extra 
+    #staticBackdrop.modal.fade(data-bs-backdrop='static' data-bs-keyboard='false' tabindex='-1' aria-labelledby='staticBackdropLabel' aria-hidden='true')
+        .modal-dialog.modal-dialog-scrollable
+            .modal-content
+                .modal-header
+                    h1#staticBackdropLabel.modal-title.fs-5
+                        | Order Details
+                    button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+                .modal-body
+                    .row.border.rounded.p-2
+                        .col-5
+                            img.rounded.border(width='100%' src='https://cdn.pixabay.com/photo/2022/11/09/00/44/aadhaar-card-7579588_1280.png' alt='id')
+                        .col-7
+                            p.fs-6.p-0.m-0.fw-bold.second-color Product Name
+                            p.p-0.m-0.gray-color.fs-small Color, Size
+                            p.fs-5.p-0.m-0.fw-bold.second-color $20
+                            p.p-0.m-0.gray-color.fs-small Qnt: 1
+                    p.fs-5.m-0.mt-2.p-0.fw-bold.second-color
+                        | Contact Details
+                    .border.rounded.p-2
+                        p.fs-6.p-0.m-0.fw-bold.second-color User Name
+                        hr
+                        p.p-0.m-0.gray-color
+                            | 5-4658 Barter Street. Additional information, like the business
+                            | name
+                        .d-flex
+                            p.p-0.m-0.fw-bold Phone :
+                            p.p-0.m-0.gray-color +91 90909088
+                        .d-flex
+                            p.p-0.m-0.fw-bold Land mark :
+                            p.p-0.m-0.gray-color Some Land mark
+                    p.fs-5.m-0.mt-2.p-0.fw-bold.second-color Payment
+                    .d-flex
+                        p.p-0.m-0.fw-bold Payment Mode :
+                        p.p-0.m-0.gray-color COD
+                    .d-flex
+                        p.p-0.m-0.fw-bold Payment Status :
+                        p.p-0.m-0.gray-color Un-Paid
+                    p.fs-5.m-0.mt-2.p-0.fw-bold.second-color Manage Order
+                    .d-flex
+                        p.p-0.m-0.fw-bold Update Order Status:
+                        p.p-0.m-0.text-primary Order Status

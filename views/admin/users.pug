@@ -1,0 +1,35 @@
+extends layout/base
+
+block block
+    .col-9.background_color.m-0.height-100.over-flow
+        .p-2.background_white.shadow.mt-2.rounded
+            .d-flex.justify-content-between.align-items-center
+                .form-group.has-search.position-relative
+                    span.bi.bi-search.form-control-feedback
+                    input.form-control(type='text' placeholder='Search')
+                img.icon(src='./Assets/Images/icon.png' alt='user-profile')
+
+        .p-3.background_white.shadow.mt-2.rounded
+            .d-flex.justify-content-between
+                h6.fs-5.fw-bold.second-color.p-0.m-0 Total Vendors
+            hr.gray-color.m-0.mt-1
+            each doc in docs
+                a.d-flex.justify-content-between.align-items-center.mt-3(href=`/admin/user-management/${doc.ecmuId}`)
+                    .d-flex.align-items-center
+                        img.icon(src=doc.profile alt=doc.name+'user-profile')
+                        .ms-2
+                            p.fs-6.p-0.m-0.fw-bold.second-color=doc.name
+                    p.p-0.m-0.gray-color= new Date(doc.createdAt).toLocaleDateString()
+        nav.mt-5(aria-label='Page navigation example')
+            ul.pagination.justify-content-center
+                li.page-item
+                    a.page-link.pagination_manage(type="button" aria-label='Previous' data-type="pre")
+                        span(aria-hidden='true') &laquo;
+                li.page-item
+                    - const datas = new URL(url);
+                    - let num = datas.searchParams.get('page');
+                    - num = !!num*1?num : 1;
+                    a.page-link.active#page_no()=num 
+                li.page-item
+                    button.page-link.pagination_manage(type="button" aria-label='Next' disabled=docs.length ? false : true class=docs.length ? "" :"bg-light" data-type="next")
+                        span(aria-hidden='true' ) &raquo;

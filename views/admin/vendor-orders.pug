@@ -1,0 +1,140 @@
+extends layout/base
+
+block block
+    .col-9.background_color.m-0.height-100.over-flow
+        .p-2.background_white.shadow.mt-2.rounded
+            .d-flex.justify-content-between.align-items-center
+                .form-group.has-search.position-relative
+                    span.bi.bi-search.form-control-feedback
+                    input.form-control(type='text' placeholder='Search')
+                img.icon(src='./Assets/Images/icon.png' alt='user-profile')
+        div
+            .p-3.background_white.shadow.mt-2.rounded
+                .d-flex.justify-content-around
+                    a.button_light(href=`/admin/vendors-management/${user.ecmuId}`) Personal Details
+                    a.button_dark(href=`/admin/vendors-management/order-details/${user.ecmuId}`) Order Details
+                    a.button_light(href=`/admin/vendors-management/products/${user.ecmuId}`) Product Details
+        .p-2.background_white.shadow.mt-2.rounded
+            .p-1.button_background.w-50.rounded-pill.m-auto.mt-3
+                .d-flex
+                    a#batch.in-active.w-50.button_dark(onclick='functionBatch()') Active Order
+                    a#selected.w-50.in-active(onclick='functionSelect()') Completed Orders
+            #batch-list
+                each doc,i in orders.active
+                    -const val = doc.productDetails;
+                    a.d-flex.justify-content-between.align-items-center.mt-3(data-bs-toggle='modal' data-bs-target=`#staticBackdrop${i}` href='#')
+                        .d-flex.align-items-center
+                            img.icon(src=val.bannerImage alt='user-profile')
+                            .ms-2
+                                p.fs-6.p-0.m-0.fw-bold.second-color=val.name
+                        p.p-0.m-0.gray-color=new Date(doc.createdAt).toLocaleDateString()
+                        p.p-0.m-0 View Details
+                    .modal.fade(data-bs-backdrop='static' data-bs-keyboard='false' id=`staticBackdrop${i}` tabindex='-1' aria-labelledby='staticBackdropLabel' aria-hidden='true')
+                        .modal-dialog.modal-dialog-scrollable
+                            .modal-content
+                                .modal-header
+                                    h1#staticBackdropLabel.modal-title.fs-5
+                                        | Order Details
+                                    button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+                                .modal-body
+                                    .row.border.rounded.p-2
+                                        .col-5
+                                            img.rounded.border(src=val.bannerImage width='100%' alt='id')
+                                        .col-7
+                                        p.fs-6.p-0.m-0.fw-bold.second-color=val.name
+                                        p.p-0.m-0.gray-color.fs-small 
+                                            | #{val.productType === "colorOnly" || val.productType === "colorWithSize" ? val.color+",":""} #{val.productType === "sizeOnly" || val.productType === "colorWithSize" ? val.size+",":""} #{new Date(doc.createdAt).toLocaleDateString()}
+                                        p.fs-5.p-0.m-0.fw-bold.second-color 
+                                            if val.discountPrice
+                                                | $#{val.discountPrice}
+                                                span.text-secondary.fw-normal.text-decoration-line-through.product-des $#{val.price}
+                                            else 
+                                                | $#{val.price}
+
+                                        p.p-0.m-0.gray-color.fs-small
+                                            | Delivery Date : -
+                                        p.p-0.m-0.gray-color.fs-small
+                                            | Status : #{doc.orderDetails.orderStatus}
+                                    p.fs-5.m-0.mt-2.p-0.fw-bold.second-color
+                                        | Contact Details
+                                    .border.rounded.p-2
+                                        p.fs-6.p-0.m-0.fw-bold.second-color= doc.userAddress.name
+                                        p.gray-color #{doc.userAddress.streetAddress}, #{doc.userAddress.town}, #{doc.userAddress.state}, #{doc.userAddress.country} - #{doc.userAddress.zip} 
+                                        .d-flex.mt-1
+                                            p.fw-bold Phone:
+                                            p.gray-color #{doc.userAddress.phone}
+                                        .d-flex.mt-1
+                                            p.fw-bold Land mark :
+                                            p.gray-color= doc.userAddress.landmark
+                                    p.fs-5.m-0.mt-2.p-0.fw-bold.second-color Payment
+                                    .d-flex
+                                        p.p-0.m-0.fw-bold Payment Mode :
+                                        p.p-0.m-0.gray-color=doc.orderDetails.paymentStatus
+                                    .d-flex
+                                        p.p-0.m-0.fw-bold Payment Status :
+                                        p.p-0.m-0.gray-color=doc.orderDetails.paymentStatus === "COD" ? "Un-Paid" : "Paid"
+                                    p.fs-5.m-0.mt-2.p-0.fw-bold.second-color Manage Order
+                                    .d-flex
+                                        p.p-0.m-0.fw-bold Update Order Status : 
+                                        p.p-0.m-0.text-primary #{doc.orderDetails.orderStatus}
+
+
+            #selected-list.d-none
+                each doc,i in orders.history
+                    -const val = doc.productDetails;
+                    a.d-flex.justify-content-between.align-items-center.mt-3(data-bs-toggle='modal' data-bs-target=`#staticBackdropHis${i}` href='#')
+                        .d-flex.align-items-center
+                            img.icon(src=val.bannerImage alt='user-profile')
+                            .ms-2
+                                p.fs-6.p-0.m-0.fw-bold.second-color=val.name
+                        p.p-0.m-0.gray-color=new Date(doc.createdAt).toLocaleDateString()
+                        p.p-0.m-0 View Details
+                    .modal.fade(data-bs-backdrop='static' data-bs-keyboard='false' id=`staticBackdropHis${i}` tabindex='-1' aria-labelledby='staticBackdropLabel' aria-hidden='true')
+                        .modal-dialog.modal-dialog-scrollable
+                            .modal-content
+                                .modal-header
+                                    h1#staticBackdropLabel.modal-title.fs-5
+                                        | Order Details
+                                    button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+                                .modal-body
+                                    .row.border.rounded.p-2
+                                        .col-5
+                                            img.rounded.border(src=val.bannerImage width='100%' alt='id')
+                                        .col-7
+                                        p.fs-6.p-0.m-0.fw-bold.second-color=val.name
+                                        p.p-0.m-0.gray-color.fs-small 
+                                            | #{val.productType === "colorOnly" || val.productType === "colorWithSize" ? val.color+",":""} #{val.productType === "sizeOnly" || val.productType === "colorWithSize" ? val.size+",":""} #{new Date(doc.createdAt).toLocaleDateString()}
+                                        p.fs-5.p-0.m-0.fw-bold.second-color 
+                                            if val.discountPrice
+                                                | $#{val.discountPrice}
+                                                span.text-secondary.fw-normal.text-decoration-line-through.product-des $#{val.price}
+                                            else 
+                                                | $#{val.price}
+
+                                        p.p-0.m-0.gray-color.fs-small
+                                            | Delivery Date : -
+                                        p.p-0.m-0.gray-color.fs-small
+                                            | Status : #{doc.orderDetails.orderStatus}
+                                    p.fs-5.m-0.mt-2.p-0.fw-bold.second-color
+                                        | Contact Details
+                                    .border.rounded.p-2
+                                        p.fs-6.p-0.m-0.fw-bold.second-color= doc.userAddress.name
+                                        p.gray-color #{doc.userAddress.streetAddress}, #{doc.userAddress.town}, #{doc.userAddress.state}, #{doc.userAddress.country} - #{doc.userAddress.zip} 
+                                        .d-flex.mt-1
+                                            p.fw-bold Phone:
+                                            p.gray-color #{doc.userAddress.phone}
+                                        .d-flex.mt-1
+                                            p.fw-bold Land mark :
+                                            p.gray-color= doc.userAddress.landmark
+                                    p.fs-5.m-0.mt-2.p-0.fw-bold.second-color Payment
+                                    .d-flex
+                                        p.p-0.m-0.fw-bold Payment Mode :
+                                        p.p-0.m-0.gray-color=doc.orderDetails.paymentStatus
+                                    .d-flex
+                                        p.p-0.m-0.fw-bold Payment Status :
+                                        p.p-0.m-0.gray-color=doc.orderDetails.paymentStatus === "COD" ? "Un-Paid" : "Paid"
+                                    p.fs-5.m-0.mt-2.p-0.fw-bold.second-color Manage Order
+                                    .d-flex
+                                        p.p-0.m-0.fw-bold Update Order Status : 
+                                        p.p-0.m-0.text-primary #{doc.orderDetails.orderStatus}
+

@@ -1,0 +1,119 @@
+// Heder Section for Web
+header.shadow.sticky-top.bg-body-tertiary.bg-white.header-section
+  nav.navbar.navbar-expand-lg.bg-body-tertiary.shadow-sm.p-0
+    .container-xl.p-0
+      a(href='/')
+        h3.logo
+          | Akstar
+          span.logo-sub .com
+      button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
+        span.navbar-toggler-icon
+      #navbarSupportedContent.collapse.navbar-collapse.p-0
+        ul.navbar-nav.me-auto.mb-lg-0
+          li.nav-item
+            a.nav-link.active(aria-current='page' href='/') Home
+          li.nav-item
+            a.nav-link(href='/shop') Shop
+
+        .position-relative.d-flex
+          .position-relative
+            input.form-control.me-2(type='text' id="search" placeholder='Search...' aria-label='Search...' aria-describedby='button-addon2')
+            a#button-addon2.search-icon.position-absolute.search_prdocuts.text-secondary(type='button')
+              i.bi.bi-search 
+            #search_product 
+              script.
+                document.querySelector('.search_prdocuts').addEventListener('click',e=>{
+                  e.preventDefault();
+                  let updatedUrl = window.location.pathname === "/shop" ? new URL(window.location.href) : new URL(`${window.location.origin}/shop`)
+                  const value = document.getElementById('search').value;
+                  updatedUrl.searchParams.set('search', value)
+                  return location.assign(updatedUrl)
+                })
+                document.getElementById('search_product').remove()
+          .p-0.position-relative
+            .text-center.p-0.m-0.ms-3.cursor-pointer.sign-dropdown
+              i.bi.bi-person-fill.cart.fs-6.m-0.p-0
+              p.fw-bold.cart-text.text-center.p-0.m-0 Profile
+              ul.dropdown-menu
+                if !user
+                  li
+                    a.dropdown-item(href='/login')
+                      i.bi.bi-box-arrow-in-right.me-2
+                      |  Sign
+                      |                         In
+                if user
+                  li
+                    a.dropdown-item(href='/account')
+                      i.bi.bi-person-circle.me-2
+                      | My Account
+                  li
+                    a.dropdown-item(href='/wishlist')
+                      i.bi.bi-heart.me-2
+                      | Wishlist
+                  li
+                    a.dropdown-item(href='/account')
+                      i.bi.bi-box-seam.me-2
+                      | Orders
+                  .divider.dropdown-divider
+                  li
+                    a.dropdown-item(href='/logout')
+                      i.bi.bi-power.me-2
+                      | Logout
+          a.text-center.p-0.m-0.ms-4(href='/wishlist')
+            i.bi.bi-heart.cart.fs-6.m-0.p-0
+            p.fw-bold.cart-text.text-center.p-0.m-0 Wishlist
+          a.text-center.p-0.m-0.ms-4(href='/cart')
+            i.bi.bi-basket3.cart.fs-6.m-0.p-0
+            p.fw-bold.cart-text.text-center.p-0.m-0 Cart
+// Offcanvas component
+#offcanvasWithBothOptions.offcanvas.offcanvas-start.p-0(data-bs-scroll='true' tabindex='-1' aria-labelledby='offcanvasWithBothOptionsLabel')
+  .offcanvas-header.bg-main-light
+    a#offcanvasWithBothOptionsLabel.side-nav-sign(href='#')
+      i.bi.bi-person-circle
+      |           Hello, #{user ? user.name : "Sign-in"}
+    i.bi.bi-x-lg.cursor-pointer(data-bs-dismiss='offcanvas' aria-label='Close')
+  .offcanvas-body.p-0
+    a.side-nav-link(href='/')  Home 
+    a.side-nav-link(href='/shop') Shop 
+    if user
+      a.side-nav-link(href='/account')  Account  
+      a.side-nav-link(href='/logout')  Logout 
+    else
+      a.side-nav-link(href='/login')  Login 
+// Header Section for MObile
+header.shadow.sticky-top.bg-body-tertiary.bg-main.header-section-mobile
+  nav.container-xl
+    .row.justify-content-start.pt-2.pb-1
+      .col-6
+        .d-flex
+          i.bi.bi-list.cart.text-white.cursor-pointer(data-bs-toggle='offcanvas' data-bs-target='#offcanvasWithBothOptions' aria-controls='offcanvasWithBothOptions')
+          a.logo.text-white.mt-1.ms-1.h3(href="/")
+            | Akstar
+            span.logo-sub .com
+      .col-6
+        .d-flex.flex-row-reverse
+          div
+            a.position-relative(href='/cart')
+              i.bi.bi-bag.cart.text-white
+          if user
+            .pt-0.pb-1.ms-5.me-3
+              a.position-relative(href='/account')
+                i.bi.bi-person-fill.cart.text-white
+          else
+            .pt-0.pb-1.ms-5.me-3
+              a.position-relative(href='/login')
+                i.bi.bi-person-fill.cart.text-white
+  nav.container-xl.bg-white.pt-1.pb-1
+    .position-relative.w-100
+      input.form-control.w-100#search_m(type='text' placeholder='Search...' aria-label='Search...' aria-describedby='button-addon2')
+      i.bi.bi-search.search-icon.position-absolute.search_prdocuts_m
+      #search_products 
+              script.
+                document.querySelector('.search_prdocuts_m').addEventListener('click',e=>{
+                  e.preventDefault();
+                  let updatedUrl = window.location.pathname === "/shop" ? new URL(window.location.href) : new URL(`${window.location.origin}/shop`)
+                  const value = document.getElementById('search_m').value;
+                  updatedUrl.searchParams.set('search', value)
+                  return location.assign(updatedUrl)
+                })
+                document.getElementById('search_products').remove()
